@@ -1,11 +1,9 @@
-import Tinyfier from '@components/tinyfier';
+import * as React from 'react';
 
 export default function MainScreen() {
 	return (
-		<Tinyfier>
-			<section>
-				<h1>I am the MainScreen!</h1>
-			</section>
-		</Tinyfier>
+		<section>
+			<h1>I am the MainScreen!</h1>
+		</section>
 	);
 }
