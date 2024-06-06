@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'ipc-compression';
+export type Channels = 'ipc-example' | 'app:compression';
 
 const electronHandler = {
 	ipcRenderer: {
@@ -20,9 +20,11 @@ const electronHandler = {
 				ipcRenderer.removeListener(channel, subscription);
 			};
 		},
-		once(channel: Channels, func: (...args: unknown[]) => void) {
+		once(channel: Channels, func: (...args: any[]) => void) {
 			ipcRenderer.once(channel, (_event, ...args) => func(...args));
 		},
+		compressImages: (files: string[]) =>
+			ipcRenderer.invoke('app:compress-images', files),
 	},
 };
 

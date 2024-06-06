@@ -1,0 +1,15 @@
+#content {
+	display: grid;
+	align-content: space-between;
+	gap: 48px;
+	height: 100%;
+
+	#dropzone {
+		display: grid;
+		gap: 24px;
+
+		* {
+			width: 100%;
+		}
+	}
+}

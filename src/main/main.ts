@@ -32,7 +32,7 @@ ipcMain.on('ipc-example', async (event, arg) => {
 	event.reply('ipc-example', msgTemplate('pong'));
 });
 
-ipcMain.on('ipc-compression', handleCompression);
+ipcMain.on('app:compression', handleCompression);
 
 if (process.env.NODE_ENV === 'production') {
 	const sourceMapSupport = require('source-map-support');

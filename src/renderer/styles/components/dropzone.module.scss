@@ -2,7 +2,8 @@
 	margin: 0 auto;
 	max-width: calc(100% - 48px);
 	aspect-ratio: 1;
-	// border-radius: 12px;
+	border: 1px dashed #fafafa;
+	border-radius: 12px;
 
 	.dropZoneContent {
 		aspect-ratio: 1;

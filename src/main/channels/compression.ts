@@ -8,21 +8,30 @@ export default async function handleCompression(
 	event: IpcMainEvent,
 	...args: any[]
 ): Promise<void> {
-	const { files } = args[0];
-	for (let index = 0; index < files.length; index += 1) {
-		const file = files[index];
+	const { files }: { files: string[] } = args[0];
+	let processedFiles = 0;
+	files.map(async (file: string) => {
 		const image = fs.readFileSync(file);
-		const buffer = await sharp(image)
+		sharp(image)
 			.jpeg()
 			.toBuffer()
-			.catch((reason) => console.log(reason));
-
-		if (typeof buffer !== 'undefined') {
-			fs.writeFile(file, buffer, (err) => console.log(err));
-			event.reply('ipc-compression', {
-				progress: (index / files.length) * 100,
-				message: 'success',
+			.then((buffer) => {
+				fs.writeFileSync(file, buffer);
+				processedFiles += 1;
+				event.reply('app:compression', {
+					progress: (processedFiles / files.length) * 100,
+					type: 'success',
+					message: 'Image compression was successfull.',
+				});
+				return true;
+			})
+			.catch((reason) => {
+				processedFiles += 1;
+				event.reply('app:compression', {
+					progress: (processedFiles / files.length) * 100,
+					type: 'error',
+					message: reason,
+				});
 			});
-		}
-	}
+	});
 }
