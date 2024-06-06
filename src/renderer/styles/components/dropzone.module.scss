@@ -1,0 +1,21 @@
+.dropZone {
+	margin: 0 auto;
+	max-width: calc(100% - 96px);
+	aspect-ratio: 1;
+	// border-radius: 12px;
+
+	.dropZoneContent {
+		aspect-ratio: 1;
+		display: grid;
+		align-items: center;
+		justify-content: center;
+
+		p {
+			margin: unset;
+		}
+	}
+
+	.inputZone {
+		font-size: 1;
+	}
+}

@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-
-import { darkTheme } from '@renderer/lib/theme';
 import Navigation from '@components/navigation';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { darkTheme } from '@renderer/lib/theme';
+import * as React from 'react';
+import '@styles/global/layout.scss';
 
 const theme = createTheme(darkTheme);
 
