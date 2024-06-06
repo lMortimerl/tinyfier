@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import handleCompression from './channels/compression';
 
 class AppUpdater {
 	constructor() {
@@ -30,6 +31,8 @@ ipcMain.on('ipc-example', async (event, arg) => {
 	console.log(msgTemplate(arg));
 	event.reply('ipc-example', msgTemplate('pong'));
 });
+
+ipcMain.on('ipc-compression', handleCompression);
 
 if (process.env.NODE_ENV === 'production') {
 	const sourceMapSupport = require('source-map-support');
@@ -68,6 +71,8 @@ const createWindow = async () => {
 	const getAssetPath = (...paths: string[]): string => {
 		return path.join(RESOURCES_PATH, ...paths);
 	};
+
+	// Target WidthxHeight = 375*560
 
 	mainWindow = new BrowserWindow({
 		show: false,

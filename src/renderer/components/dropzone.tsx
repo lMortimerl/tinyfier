@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styles from '@styles/components/dropzone.module.scss';
 import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
-import { Box } from '@mui/material';
+import { Box, createTheme } from '@mui/material';
+import { darkTheme } from '@renderer/lib/theme';
 
 export type DropZoneCallback = (
 	acceptedFiles: File[],
@@ -10,6 +11,7 @@ export type DropZoneCallback = (
 ) => void;
 
 export default function DropZone({ callback }: { callback: DropZoneCallback }) {
+	const theme = createTheme(darkTheme);
 	const { getRootProps, getInputProps } = useDropzone({
 		onDrop: callback,
 	});
@@ -18,16 +20,25 @@ export default function DropZone({ callback }: { callback: DropZoneCallback }) {
 		<Box
 			{...getRootProps({ className: styles.dropZone })}
 			sx={{
-				bgcolor: 'primary',
+				transition: 'background-color .25s ease',
 				'&:hover': {
 					bgcolor: 'primary.dark',
 					cursor: 'pointer',
 				},
-				transition: 'background-color .25s ease',
 			}}
 			border="1px dashed"
 			borderColor="primary-light"
 			borderRadius={4}
+			onDragEnter={(event) => {
+				event.currentTarget.style.backgroundColor =
+					theme.palette.primary.dark;
+			}}
+			onDragLeave={(event) => {
+				event.currentTarget.style.backgroundColor = 'transparent';
+			}}
+			onDrop={(event) => {
+				event.currentTarget.style.backgroundColor = 'transparent';
+			}}
 		>
 			<input {...getInputProps({ className: styles.inputZone })} />
 			<div className={styles.dropZoneContent}>

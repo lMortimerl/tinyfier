@@ -18,7 +18,8 @@
 			"@renderer/*": ["./renderer/*"],
 			"@styles/*": ["./renderer/styles/*"],
 			"@components/*": ["./renderer/components/*"],
-			"@screens/*": ["./renderer/screens/*"]
+			"@screens/*": ["./renderer/screens/*"],
+			"@main/lib/*": ["./main/lib/*"]
 		}
 	},
 	"exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]

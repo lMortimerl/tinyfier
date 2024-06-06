@@ -6,9 +6,9 @@ import CropOriginalIcon from '@mui/icons-material/CropOriginal';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 export default function Navigation() {
-	const [value, setValue] = React.useState(0);
+	const [value, setValue] = React.useState('/');
 
-	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setValue(newValue);
 	};
 
