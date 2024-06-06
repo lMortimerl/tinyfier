@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DropEvent, useDropzone } from 'react-dropzone';
 import { Box, useTheme } from '@mui/material';
+import { Image as ImageIcon } from '@mui/icons-material';
 import styles from '@styles/components/dropzone.module.scss';
 
 export type DropZoneCallback = (files: File[], event: DropEvent) => void;
@@ -29,7 +30,10 @@ export default function DropZone({ callback }: { callback: DropZoneCallback }) {
 		>
 			<input {...getInputProps({ className: styles.inputZone })} />
 			<div className={styles.dropZoneContent}>
-				<p>Drop Images Here</p>
+				<div>
+					<ImageIcon />
+					<p>Drop Images Here</p>
+				</div>
 			</div>
 		</Box>
 	);

@@ -8,13 +8,16 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import { Settings } from '@types';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import log from 'electron-log';
+import Store from 'electron-store';
+import { autoUpdater } from 'electron-updater';
+import path from 'path';
+import handleCompression from './channels/compression';
+import { loadSettings, saveSettings } from './lib/settings';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import handleCompression from './channels/compression';
 
 class AppUpdater {
 	constructor() {
@@ -26,13 +29,18 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-	const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-	console.log(msgTemplate(arg));
-	event.reply('ipc-example', msgTemplate('pong'));
+const settings = loadSettings();
+const store = new Store({ defaults: settings });
+ipcMain.on('settings:get', async (event, key) => {
+	event.returnValue = store.get(key);
+});
+ipcMain.on('settings:set', async (event, key, value) => {
+	event.returnValue = store.set(key, value);
 });
 
-ipcMain.on('app:compression', handleCompression);
+ipcMain.on('app:compression', (event, ...args) => {
+	handleCompression(event, store, ...args);
+});
 
 if (process.env.NODE_ENV === 'production') {
 	const sourceMapSupport = require('source-map-support');
@@ -72,11 +80,9 @@ const createWindow = async () => {
 		return path.join(RESOURCES_PATH, ...paths);
 	};
 
-	// Target WidthxHeight = 375*560
-
 	mainWindow = new BrowserWindow({
 		show: false,
-		width: 1024,
+		width: 375 + 580,
 		height: 728,
 		icon: getAssetPath('icon.png'),
 		webPreferences: {
@@ -139,3 +145,7 @@ app.whenReady()
 		});
 	})
 	.catch(console.log);
+
+app.on('before-quit', () => {
+	saveSettings(store.store as Settings);
+});

@@ -7,19 +7,32 @@ import {
 	Select,
 	SelectChangeEvent,
 } from '@mui/material';
+import { AvailableFormats } from '@types';
 import * as React from 'react';
 
 export default function SettingsScreen() {
-	const [targetFormat, setTargetFormat] = React.useState('webp');
-	const [replaceOriginal, setReplaceOriginal] = React.useState(false);
-	const formats = ['webp', 'jpg', 'png'];
+	const [targetFormat, setTargetFormat] = React.useState(
+		window.electron.ipcRenderer.get('targetFormat'),
+	);
+	const [replaceOriginal, setReplaceOriginal] = React.useState(
+		window.electron.ipcRenderer.get('replaceOriginal'),
+	);
+	const formats: AvailableFormats[] = ['jpeg', 'png', 'webp'];
 
 	const handleTargetFormatChange = (event: SelectChangeEvent) => {
+		window.electron.ipcRenderer.set(
+			'targetFormat',
+			event.target.value as string,
+		);
 		setTargetFormat(event.target.value as string);
 	};
 	const handleReplaceOriginalChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
+		window.electron.ipcRenderer.set(
+			'replaceOriginal',
+			event.target.checked,
+		);
 		setReplaceOriginal(event.target.checked);
 	};
 
