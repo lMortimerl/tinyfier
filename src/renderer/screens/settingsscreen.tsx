@@ -12,7 +12,9 @@ import {
 } from '@mui/material';
 import { AvailableFormats } from '@types';
 import * as React from 'react';
-import WebpSettings from './settings/webpsettings';
+import WebpSettingsTab from './settings/webpsettingstab';
+import PngSettingsTab from './settings/pngsettingstab';
+import JpegSettingsTab from './settings/jpegsettingstab';
 
 export default function SettingsScreen() {
 	const [targetFormat, setTargetFormat] = React.useState(
@@ -42,7 +44,6 @@ export default function SettingsScreen() {
 
 	return (
 		<article>
-			<h1>Settings</h1>
 			<FormControl fullWidth>
 				<InputLabel id="label-target-format">Target Format</InputLabel>
 				<Select
@@ -71,13 +72,13 @@ export default function SettingsScreen() {
 				}
 				label="Replace Original?"
 			/>
-			<Divider />
-			<h3>Advanced</h3>
+			<Divider sx={{ mt: '8px', mb: '12px' }} />
 			<Container>
-				<WebpSettings
-					properties={{
-						display: targetFormat === 'webp' ? 'block' : 'none',
-					}}
+				<WebpSettingsTab
+					display={targetFormat === 'webp' ? 'block' : 'none'}
+				/>
+				<PngSettingsTab
+					display={targetFormat === 'png' ? 'block' : 'none'}
 				/>
 				<Box
 					id="jpeg-settings"
@@ -85,15 +86,7 @@ export default function SettingsScreen() {
 						display: targetFormat === 'jpeg' ? 'block' : 'none',
 					}}
 				>
-					<h4>Jpeg format</h4>
-				</Box>
-				<Box
-					id="png-settings"
-					sx={{
-						display: targetFormat === 'png' ? 'block' : 'none',
-					}}
-				>
-					<h4>Png format</h4>
+					<JpegSettingsTab />
 				</Box>
 			</Container>
 		</article>

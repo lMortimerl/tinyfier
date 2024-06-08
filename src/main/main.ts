@@ -10,22 +10,10 @@
  */
 import { Settings } from '@types';
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
-import log from 'electron-log';
 import Store from 'electron-store';
-import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import handleCompression from './channels/compression';
-import { loadSettings, saveSettings } from './lib/settings';
-import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
-
-class AppUpdater {
-	constructor() {
-		log.transports.file.level = 'info';
-		autoUpdater.logger = log;
-		autoUpdater.checkForUpdatesAndNotify();
-	}
-}
+import { resolveHtmlPath, loadSettings, saveSettings } from './util';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -81,10 +69,13 @@ const createWindow = async () => {
 		return path.join(RESOURCES_PATH, ...paths);
 	};
 
+	const targetWidth = 375;
+	const targetHeight = 700;
+
 	mainWindow = new BrowserWindow({
 		show: false,
-		width: 375 + 580,
-		height: 728,
+		width: targetWidth + (isDebug ? 580 : 0),
+		height: targetHeight,
 		resizable: false,
 		icon: getAssetPath('icon.png'),
 		webPreferences: {
@@ -93,6 +84,7 @@ const createWindow = async () => {
 				: path.join(__dirname, '../../.erb/dll/preload.js'),
 		},
 	});
+	mainWindow.setMenuBarVisibility(false);
 
 	mainWindow.loadURL(resolveHtmlPath('index.html'));
 
@@ -111,18 +103,11 @@ const createWindow = async () => {
 		mainWindow = null;
 	});
 
-	const menuBuilder = new MenuBuilder(mainWindow);
-	menuBuilder.buildMenu();
-
 	// Open urls in the user's browser
 	mainWindow.webContents.setWindowOpenHandler((edata) => {
 		shell.openExternal(edata.url);
 		return { action: 'deny' };
 	});
-
-	// Remove this if your app does not use auto updates
-	// eslint-disable-next-line
-	new AppUpdater();
 };
 
 /**
