@@ -26,8 +26,9 @@ export default async function handleCompression(
 			.basename(filePath)
 			.replace(oldFileExtension, `-tinyfied${newFileExtension}`);
 		const newFilePath = path.join(path.dirname(filePath), newFilename);
+		const options = store.get(`${targetFormat}Options`);
 		sharp(image)
-			[targetFormat]()
+			[targetFormat](options)
 			.toBuffer()
 			.then((buffer) => {
 				fs.writeFileSync(

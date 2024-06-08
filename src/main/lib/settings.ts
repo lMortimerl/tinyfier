@@ -14,6 +14,17 @@ const SETTINGS_FILEPATH = path.join(APPDATA_FOLDER, SETTINGS_FILENAME);
 const defaultSettings: Settings = {
 	targetFormat: 'webp',
 	replaceOriginal: false,
+	webpOptions: {
+		alphaQuality: 100,
+		quality: 80,
+		lossless: false,
+		nearLossless: false,
+		smartSubsample: false,
+		effort: 4,
+		minSize: false,
+		mixed: false,
+		preset: 'default',
+	},
 };
 
 export function loadSettings(): Settings {
@@ -24,7 +35,7 @@ export function loadSettings(): Settings {
 
 	const settingsDataRaw = fs.readFileSync(SETTINGS_FILEPATH, 'utf-8');
 	const settingsData: Settings = JSON.parse(settingsDataRaw);
-	return settingsData;
+	return { ...defaultSettings, ...settingsData };
 }
 export function saveSettings(settings: Settings): void {
 	if (!fs.existsSync(APPDATA_FOLDER)) fs.mkdirSync(APPDATA_FOLDER);

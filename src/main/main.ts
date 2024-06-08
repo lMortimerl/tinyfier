@@ -57,7 +57,8 @@ if (isDebug) {
 const installExtensions = async () => {
 	const installer = require('electron-devtools-installer');
 	const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-	const extensions = ['REACT_DEVELOPER_TOOLS'];
+	// const extensions = ['REACT_DEVELOPER_TOOLS'];
+	const extensions: string[] = [];
 
 	return installer
 		.default(
@@ -84,6 +85,7 @@ const createWindow = async () => {
 		show: false,
 		width: 375 + 580,
 		height: 728,
+		resizable: false,
 		icon: getAssetPath('icon.png'),
 		webPreferences: {
 			preload: app.isPackaged

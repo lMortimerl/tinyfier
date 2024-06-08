@@ -1,5 +1,8 @@
 import {
+	Box,
 	Checkbox,
+	Container,
+	Divider,
 	FormControl,
 	FormControlLabel,
 	InputLabel,
@@ -9,6 +12,7 @@ import {
 } from '@mui/material';
 import { AvailableFormats } from '@types';
 import * as React from 'react';
+import WebpSettings from './settings/webpsettings';
 
 export default function SettingsScreen() {
 	const [targetFormat, setTargetFormat] = React.useState(
@@ -67,6 +71,31 @@ export default function SettingsScreen() {
 				}
 				label="Replace Original?"
 			/>
+			<Divider />
+			<h3>Advanced</h3>
+			<Container>
+				<WebpSettings
+					properties={{
+						display: targetFormat === 'webp' ? 'block' : 'none',
+					}}
+				/>
+				<Box
+					id="jpeg-settings"
+					sx={{
+						display: targetFormat === 'jpeg' ? 'block' : 'none',
+					}}
+				>
+					<h4>Jpeg format</h4>
+				</Box>
+				<Box
+					id="png-settings"
+					sx={{
+						display: targetFormat === 'png' ? 'block' : 'none',
+					}}
+				>
+					<h4>Png format</h4>
+				</Box>
+			</Container>
 		</article>
 	);
 }

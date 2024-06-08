@@ -18,7 +18,7 @@ export default function MainScreen() {
 	const [open, setOpen] = React.useState<boolean>(false);
 
 	React.useEffect(() => {
-		window.electron.ipcRenderer.once(
+		return window.electron.ipcRenderer.on(
 			'app:compression',
 			(args: {
 				message: string;

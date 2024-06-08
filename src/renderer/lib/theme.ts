@@ -7,7 +7,7 @@ export const darkTheme: ThemeOptions = {
 			main: '#7E57C2',
 		},
 		secondary: {
-			main: '#26C6DA',
+			main: '#0070D6',
 		},
 	},
 };
@@ -18,7 +18,7 @@ export const lightTheme: ThemeOptions = {
 			main: '#7E57C2',
 		},
 		secondary: {
-			main: '#26C6DA',
+			main: '#0070D6',
 		},
 	},
 };
