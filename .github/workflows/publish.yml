@@ -30,6 +30,7 @@ jobs:
             - name: Install and build
               run: |
                   brew install python-packaging
+                  brew install python-setuptools
                   npm install
                   npm run postinstall
                   npm run build
