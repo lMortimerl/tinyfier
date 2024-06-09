@@ -28,7 +28,7 @@ jobs:
 
             - name: Install and build
               run: |
-                  npm install
+                  npm install --build-from-source
                   npm run postinstall
                   npm run build
 
