@@ -221,7 +221,7 @@
 		"publish": {
 			"provider": "github",
 			"owner": "lMortimerl",
-			"repo": "lMortimerl/tinyfier"
+			"repo": "tinyfier"
 		}
 	},
 	"devEngines": {
