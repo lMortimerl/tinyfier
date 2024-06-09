@@ -15,7 +15,7 @@ jobs:
 
         strategy:
             matrix:
-                os: [macos-latest]
+                os: [ubuntu-22.04]
 
         steps:
             - name: Checkout git repo
@@ -27,13 +27,15 @@ jobs:
                   node-version: 18
                   cache: npm
 
-            - name: Install Python dependencies
+            - name: Install system dependencies
               run: |
-                brew install libvips python-setuptools
-
-            - name: Install Xcode Command Line Tools
-              run: |
-                xcode-select --install || true
+                sudo dpkg --add-architecture i386
+                sudo mkdir -pm755 /etc/apt/keyrings
+                wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+                sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
+                sudo apt update
+                sudo apt install -y build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev libvips-dev python3 python3-pip python3-setuptools python3-dev
+                sudo apt install -y --install-recommends winehq-stable
 
             - name: Install node-gyp dependencies
               run: |
@@ -53,4 +55,4 @@ jobs:
                   # This is used for uploading release assets to github
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                npm exec electron-builder -- --publish onTagOrDraft --win --mac --linux
+                npm exec electron-builder -- --publish onTagOrDraft --win --linux
