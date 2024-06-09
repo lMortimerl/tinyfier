@@ -27,11 +27,7 @@ jobs:
                   node-version: 18
                   cache: npm
 
-            - name: Install Homebrew
-              run: |
-                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-            - name: Install Python and other dependencies
+            - name: Install Python dependencies
               run: |
                 brew install pkg-config libvips python-setuptools
 
