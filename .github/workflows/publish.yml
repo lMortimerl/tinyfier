@@ -27,13 +27,24 @@ jobs:
                   node-version: 18
                   cache: npm
 
-            - name: Install and build
+            - name: Install Homebrew
               run: |
-                  brew install python-packaging
-                  brew install python-setuptools
-                  npm install
-                  npm run postinstall
-                  npm run build
+                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+            - name: Install Python and other dependencies
+              run: |
+                brew install python@3.12
+                brew link --overwrite python@3.12
+                brew install pkg-config libvips
+
+            - name: Install project dependencies
+              run: |
+                npm install
+
+            - name: Post-install and build
+              run: |
+                npm run postinstall
+                npm run build
 
             - name: Publish releases
               env:
