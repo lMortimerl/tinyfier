@@ -20,6 +20,12 @@ jobs:
         steps:
             - name: Checkout git repo
               uses: actions/checkout@v3
+            - name: Set env version
+              run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+            - name: Test
+              run: |
+                echo $RELEASE_VERSION
+                echo ${{ env.RELEASE_VERSION }}
 
             - name: Install Node and NPM
               uses: actions/setup-node@v3
@@ -50,9 +56,17 @@ jobs:
                 npm run postinstall
                 npm run build
 
-            - name: Publish releases
-              env:
-                  # This is used for uploading release assets to github
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Package app
               run: |
-                npm exec electron-builder -- --publish onTagOrDraft --win --linux
+                npm run package
+
+            - name: Release
+              uses: softprops/action-gh-release@v2
+              with:
+                draft:
+                repository: lMortimerl/tinyfier
+                token: ${{ secrets.GITHUB_TOKEN }}
+                files: |
+                   release/build/Tinfy Setup 0.0.1.exe
+                   release/build/Tinfy Setup 0.0.1.exe.blockmap
+                   release/build/Tinfy-0.0.1.AppImage
