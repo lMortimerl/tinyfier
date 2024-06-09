@@ -11,38 +11,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
-
-      - name: Install Python
-        run: |
-          brew install python@3.12
-          python3 -m venv venv
-
-      - name: Set up Python virtual environment
-        run: |
-          source venv/bin/activate
-          python3 -m pip install --upgrade pip setuptools
 
       - name: Install Node.js and NPM
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: npm
-
-      - name: Install dependencies
-        run: |
-          source venv/bin/activate
-          npm install
-          npm run postinstall || exit 0 # Continue even if postinstall fails
-
-      - name: Build application
-        run: |
-          source venv/bin/activate
-          npm run build
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
