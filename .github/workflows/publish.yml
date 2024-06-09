@@ -33,9 +33,7 @@ jobs:
 
             - name: Install Python and other dependencies
               run: |
-                brew install python@3.12
-                brew link --overwrite python@3.12
-                brew install pkg-config libvips
+                brew install pkg-config libvips python-setuptools
 
             - name: Install project dependencies
               run: |
