@@ -29,7 +29,7 @@ jobs:
 
             - name: Install and build
               run: |
-                  brew install packaging
+                  brew install python-packaging
                   npm install
                   npm run postinstall
                   npm run build
