@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_on_windows:
+  publish_windows:
     runs-on: windows-latest
 
     steps:
@@ -25,7 +25,7 @@ jobs:
           npm install
           npm run postinstall
 
-      - name: Package
+      - name: Package App
         run: |
           npm run package
 
@@ -33,10 +33,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            release/build/Tinfy Setup ${{ github.ref_name }}.exe
-            release/build/Tinfy Setup ${{ github.ref_name }}.exe.blockname
+            release/build/Tinfy-Setup-${{ github.ref_name }}.exe
+            release/build/Tinfy-Setup-${{ github.ref_name }}.exe.blockmap
 
-  build_on_ubuntu:
+  publish_linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -49,17 +49,18 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Install project dependencies
+      - name: Install Tinfy dependencies
         run: |
           npm install
-          npm run postinstall
 
-      - name: Package
+      - name: Package Tinfy
         run: |
           npm run package
 
-      - name: Release App
+      - name: Release Tinfy ${{ github.ref_name }}
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            release/build/Tinfy-v${{ github.ref_name }}.AppImage
+            release/build/Tinfy-${{ github.ref_name }}.AppImage
+            release/build/latest.yml
+            release/build/latest-linux.yml
