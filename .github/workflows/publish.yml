@@ -7,11 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest]
+  build_on_windows:
+    runs-on: windows-latest
 
     steps:
       - name: Checkout git repo
@@ -20,11 +17,49 @@ jobs:
       - name: Install Node.js and NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22
           cache: npm
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+      - name: Install project dependencies
+        run: |
+          npm install
+          npm run postinstall
+
+      - name: Package
+        run: |
+          npm run package
+
+      - name: Release App
+        uses: softprops/action-gh-release@v2
         with:
-          github_token: ${{ secrets.github_token }}
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          files: |
+            release/build/Tinfy Setup ${{ github.ref_name }}.exe
+            release/build/Tinfy Setup ${{ github.ref_name }}.exe.blockname
+
+  build_on_ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v3
+
+      - name: Install Node.js and NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install project dependencies
+        run: |
+          npm install
+          npm run postinstall
+
+      - name: Package
+        run: |
+          npm run package
+
+      - name: Release App
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/build/Tinfy-v${{ github.ref_name }}.AppImage

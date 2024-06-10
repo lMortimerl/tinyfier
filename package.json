@@ -172,6 +172,7 @@
 		],
 		"afterSign": ".erb/scripts/notarize.js",
 		"mac": {
+			"artifactName": "${productName} Setup v${version}.${ext}",
 			"target": {
 				"target": "default",
 				"arch": [
@@ -186,6 +187,7 @@
 			"gatekeeperAssess": false
 		},
 		"dmg": {
+			"artifactName": "${productName} v${version}.${ext}",
 			"contents": [
 				{
 					"x": 130,
@@ -200,11 +202,13 @@
 			]
 		},
 		"win": {
+			"artifactName": "${productName} Setup v${version}.${ext}",
 			"target": [
 				"nsis"
 			]
 		},
 		"linux": {
+			"artifactName": "${productName} v${version}.${ext}",
 			"target": [
 				"AppImage"
 			],
