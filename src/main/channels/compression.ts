@@ -32,7 +32,9 @@ export default async function handleCompression(
 			.toBuffer()
 			.then((buffer) => {
 				fs.writeFileSync(
-					replaceOriginal ? filePath : newFilePath,
+					replaceOriginal
+						? filePath.replace(oldFileExtension, newFileExtension)
+						: newFilePath,
 					buffer,
 				);
 				processedFiles += 1;
