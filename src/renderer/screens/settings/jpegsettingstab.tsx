@@ -18,6 +18,7 @@ export default function JpegSettingsTab({ ...rest }: JpegSettingsProps) {
 	) => {
 		updatedJpegSettings[key as keyof JpegSettings] = value;
 		setUpdatedJpegSettings(updatedJpegSettings);
+		window.electron.ipcRenderer.set('jpegOptions', updatedJpegSettings);
 	};
 
 	return (
