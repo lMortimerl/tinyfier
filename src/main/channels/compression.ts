@@ -16,6 +16,9 @@ export default async function handleCompression(
 	) as AvailableFormats;
 	const replaceOriginal = store.get('replaceOriginal');
 	const { files }: { files: string[] } = args[0];
+	const resize = store.get('resize');
+	const targetX = store.get('resizeTargetX');
+	const targetY = store.get('resizeTargetY');
 	let processedFiles = 0;
 
 	files.map(async (filePath: string) => {
@@ -27,8 +30,12 @@ export default async function handleCompression(
 			.replace(oldFileExtension, `-tinyfied${newFileExtension}`);
 		const newFilePath = path.join(path.dirname(filePath), newFilename);
 		const options = store.get(`${targetFormat}Options`);
-		sharp(image)
+		const sObj = sharp(image)
 			[targetFormat](options)
+		if (resize) {
+			sObj.resize(targetX, targetY);
+		}
+		sObj
 			.toBuffer()
 			.then((buffer) => {
 				fs.writeFileSync(

@@ -75,63 +75,76 @@ export default function SettingsScreen() {
 
 	return (
 		<article>
-			<FormControl fullWidth>
-				<InputLabel id="label-target-format">Target Format</InputLabel>
-				<Select
-					value={targetFormat}
-					fullWidth
-					labelId="label-target-format"
-					id="target-format"
-					label="Target Format"
-					onChange={handleTargetFormatChange}
-				>
-					{formats.map((value) => {
-						return (
-							<MenuItem value={value} key={value}>
-								{value}
-							</MenuItem>
-						);
-					})}
-				</Select>
-			</FormControl>
-			<FormControlLabel
-				control={
-					<Checkbox
-						onChange={handleReplaceOriginalChange}
-						checked={replaceOriginal}
-					/>
-				}
-				label="Replace Original?"
-			/>
-			<FormControlLabel
-				control={
-					<Checkbox
-						onChange={handleEnableResizeChange}
-						checked={enableResize}
-					/>
-				}
-				label="Enable resizing?"
-			/>
-			<Grid container spacing={2}>
-				<Grid item xs={6}>
+			<Grid container spacing={4}>
+				<Grid item xs={12}>
 					<FormControl fullWidth>
-						<InputLabel>Size X</InputLabel>
-							<Input
-								name="resizeTargetX"
-								onChange={handleResizeTargetX}
-								value={`${resizeTargetX}`}
-							/>
+						<InputLabel id="label-target-format">Target Format</InputLabel>
+						<Select
+							value={targetFormat}
+							fullWidth
+							labelId="label-target-format"
+							id="target-format"
+							label="Target Format"
+							onChange={handleTargetFormatChange}
+						>
+							{formats.map((value) => {
+								return (
+									<MenuItem value={value} key={value}>
+										{value}
+									</MenuItem>
+								);
+							})}
+						</Select>
 					</FormControl>
 				</Grid>
-				<Grid item xs={6}>
-					<FormControl fullWidth>
-						<InputLabel>Size Y</InputLabel>
-						<Input
-							name="resizeTargetY"
-							onChange={handleResizeTargetY}
-							value={`${resizeTargetY}`}
-						/>
-					</FormControl>
+				<Grid item xs={12}>
+					<Grid container spacing={2}>
+						<Grid item xs={6}>
+							<FormControlLabel control={
+								<Checkbox
+									onChange={handleReplaceOriginalChange}
+									checked={replaceOriginal}
+								/>
+							}
+								label="Replace Original?"
+							/>
+						</Grid>
+						<Grid item xs={6}>
+							<FormControlLabel
+								control={
+									<Checkbox
+										onChange={handleEnableResizeChange}
+										checked={enableResize}
+									/>
+								}
+								label="Enable resizing?"
+							/>
+						</Grid>
+					</Grid>
+				</Grid>
+				<Grid item xs={12} sx={{ paddingTop: "12", display: (enableResize ? "block" : "none") }}>
+					<Grid container spacing={2}>
+						<Grid item xs={6}>
+							<FormControl fullWidth>
+								<InputLabel>Size X</InputLabel>
+								<Input
+									name="resizeTargetX"
+									onChange={handleResizeTargetX}
+									value={`${resizeTargetX}`}
+								/>
+							</FormControl>
+						</Grid>
+						<Grid item xs={6}>
+							<FormControl fullWidth>
+								<InputLabel>Size Y</InputLabel>
+								<Input
+									name="resizeTargetY"
+									onChange={handleResizeTargetY}
+									value={`${resizeTargetY}`}
+								/>
+							</FormControl>
+						</Grid>
+					</Grid>
 				</Grid>
 			</Grid>
 			<Divider sx={{ mt: '8px', mb: '12px' }} />
