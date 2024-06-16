@@ -26,6 +26,9 @@ const SETTINGS_FILEPATH = path.join(APPDATA_FOLDER, SETTINGS_FILENAME);
 const defaultSettings: Settings = {
 	targetFormat: 'webp',
 	replaceOriginal: false,
+	resize: false,
+	resizeTargetX: 1920,
+	resizeTargetY: 1080,
 	webpOptions: {
 		alphaQuality: 100,
 		quality: 80,

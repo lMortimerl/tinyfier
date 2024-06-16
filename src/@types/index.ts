@@ -8,6 +8,9 @@ export interface JpegSettings extends FormatOptions, sharp.JpegOptions {}
 export type Settings = {
 	targetFormat: AvailableFormats;
 	replaceOriginal: boolean;
+	resize?: boolean;
+	resizeTargetX?: number;
+	resizeTargetY?: number;
 	webpOptions?: WebpSettings;
 	pngOptions?: PngSettings;
 	jpegOptions?: JpegSettings;
