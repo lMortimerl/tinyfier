@@ -172,7 +172,7 @@
 		],
 		"afterSign": ".erb/scripts/notarize.js",
 		"mac": {
-			"artifactName": "${productName}-Setup-v${version}.${ext}",
+			"artifactName": "${productName}-Setup.${ext}",
 			"target": {
 				"target": "default",
 				"arch": [
@@ -187,7 +187,7 @@
 			"gatekeeperAssess": false
 		},
 		"dmg": {
-			"artifactName": "${productName}-v${version}.${ext}",
+			"artifactName": "${productName}.${ext}",
 			"contents": [
 				{
 					"x": 130,
@@ -202,13 +202,13 @@
 			]
 		},
 		"win": {
-			"artifactName": "${productName}-Setup-v${version}.${ext}",
+			"artifactName": "${productName}-Setup.${ext}",
 			"target": [
 				"nsis"
 			]
 		},
 		"linux": {
-			"artifactName": "${productName}-v${version}.${ext}",
+			"artifactName": "${productName}.${ext}",
 			"target": [
 				"AppImage"
 			],
@@ -240,5 +240,4 @@
 		"logLevel": "quiet"
 	},
 	"version": "0.0.4",
-	"packageManager": "yarn@4.3.0+sha512.1606bef7c84bc7d83b8576063de2fd08f7d69f9939015bed800f9585a002390268ecc777e9feeba7e26e9556aef6beaad4806968db2182ab5dd3e955ab3b9a0b"
 }
