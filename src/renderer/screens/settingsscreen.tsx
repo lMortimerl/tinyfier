@@ -23,9 +23,6 @@ export default function SettingsScreen() {
 	const [targetFormat, setTargetFormat] = React.useState(
 		window.electron.ipcRenderer.get('targetFormat'),
 	);
-	const [replaceOriginal, setReplaceOriginal] = React.useState(
-		window.electron.ipcRenderer.get('replaceOriginal'),
-	);
 	const [enableResize, setEnableResize] = React.useState(
 		window.electron.ipcRenderer.get('resize'),
 	);
@@ -44,15 +41,6 @@ export default function SettingsScreen() {
 			event.target.value as string,
 		);
 		setTargetFormat(event.target.value as string);
-	};
-	const handleReplaceOriginalChange = (
-		event: React.ChangeEvent<HTMLInputElement>,
-	) => {
-		window.electron.ipcRenderer.set(
-			'replaceOriginal',
-			event.target.checked,
-		);
-		setReplaceOriginal(event.target.checked);
 	};
 	const handleEnableResizeChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
@@ -100,16 +88,6 @@ export default function SettingsScreen() {
 				<Grid item xs={12}>
 					<Grid container spacing={2}>
 						<Grid item xs={6}>
-							<FormControlLabel control={
-								<Checkbox
-									onChange={handleReplaceOriginalChange}
-									checked={replaceOriginal}
-								/>
-							}
-								label="Replace Original?"
-							/>
-						</Grid>
-						<Grid item xs={6}>
 							<FormControlLabel
 								control={
 									<Checkbox
@@ -131,6 +109,7 @@ export default function SettingsScreen() {
 									name="resizeTargetX"
 									onChange={handleResizeTargetX}
 									value={`${resizeTargetX}`}
+									type='number'
 								/>
 							</FormControl>
 						</Grid>
@@ -141,6 +120,7 @@ export default function SettingsScreen() {
 									name="resizeTargetY"
 									onChange={handleResizeTargetY}
 									value={`${resizeTargetY}`}
+									type='number'
 								/>
 							</FormControl>
 						</Grid>

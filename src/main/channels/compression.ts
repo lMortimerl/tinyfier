@@ -14,11 +14,10 @@ export default async function handleCompression(
 	const targetFormat: AvailableFormats = store.get(
 		'targetFormat',
 	) as AvailableFormats;
-	const replaceOriginal = store.get('replaceOriginal');
 	const { files }: { files: string[] } = args[0];
 	const resize = store.get('resize');
-	const targetX = store.get('resizeTargetX');
-	const targetY = store.get('resizeTargetY');
+	const targetX = parseInt(store.get('resizeTargetX'));
+	const targetY = parseInt(store.get('resizeTargetY'));
 	let processedFiles = 0;
 
 	files.map(async (filePath: string) => {
@@ -39,9 +38,7 @@ export default async function handleCompression(
 			.toBuffer()
 			.then((buffer) => {
 				fs.writeFileSync(
-					replaceOriginal
-						? filePath.replace(oldFileExtension, newFileExtension)
-						: newFilePath,
+					newFilePath,
 					buffer,
 				);
 				processedFiles += 1;
